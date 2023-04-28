@@ -34,7 +34,10 @@ export class TupleValidator<T extends any[]> extends BaseValidator<[...T]> {
 		const transformed: T = [] as unknown as T;
 
 		for (let i = 0; i < values.length; i++) {
-			const result = this.validators[i].run(values[i]);
+			const validator = this.validators[i];
+			validator.setParent(this.parent ?? values);
+
+			const result = validator.run(values[i]);
 			if (result.isOk()) transformed.push(result.value);
 			else errors.push([i, result.error!]);
 		}

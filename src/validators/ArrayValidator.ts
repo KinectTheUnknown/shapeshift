@@ -91,6 +91,8 @@ export class ArrayValidator<T extends unknown[], I = T[number]> extends BaseVali
 		const errors: [number, BaseError][] = [];
 		const transformed: T = [] as unknown as T;
 
+		this.validator.setParent(this.parent ?? values);
+
 		for (let i = 0; i < values.length; i++) {
 			const result = this.validator.run(values[i]);
 			if (result.isOk()) transformed.push(result.value);

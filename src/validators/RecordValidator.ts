@@ -37,6 +37,8 @@ export class RecordValidator<T> extends BaseValidator<Record<string, T>> {
 		const errors: [string, BaseError][] = [];
 		const transformed: Record<string, T> = {};
 
+		this.validator.setParent(this.parent ?? value);
+
 		for (const [key, val] of Object.entries(value!)) {
 			const result = this.validator.run(val);
 			if (result.isOk()) transformed[key] = result.value;
